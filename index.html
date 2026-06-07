@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>河北盈霆裕顺网络科技有限公司 | 沉浸式游戏开发先驱</title>
+    <meta name="description" content="河北盈霆裕顺网络科技有限公司，坐落于中国，专注于高品质游戏开发、虚拟现实技术及互动娱乐体验。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* --- 全局变量与重置 --- */
+        :root {
+            --bg-color: #0b0c15;
+            --bg-secondary: #151621;
+            --primary: #6c5ce7;
+            --accent: #00cec9;
+            --text-main: #ffffff;
+            --text-gray: #a4b0be;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        /* --- 通用组件 --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text-main), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* --- 1. 导航栏 --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+            background: rgba(11, 12, 21, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- 2. Hero 区域 --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: url('https://picsum.photos/1920/1080?grayscale&blur=2') no-repeat center center/cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(11,12,21,0.9), rgba(11,12,21,0.6));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero h1 span {
+            display: block;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* --- 3. 合作伙伴/技术栈跑马灯 --- */
+        .marquee {
+            background: var(--bg-secondary);
+            padding: 30px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+        
+        .marquee-content span {
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-gray);
+            margin: 0 40px;
+            opacity: 0.5;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- 4. 公司简介 --- */
+        .about-section {
+            background: var(--bg-color);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-img {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .about-img img { width: 100%; display: block; transition: var(--transition); }
+        .about-img:hover img { transform: scale(1.05); }
+
+        /* --- 5. 核心数据 --- */
+        .stats {
+            background: linear-gradient(rgba(11,12,21,0.8), rgba(11,12,21,0.8)), url('https://picsum.photos/seed/tech/1600/600') fixed center/cover;
+            padding: 80px 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+        }
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .stat-item p { color: #fff; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+
+        /* --- 6. 核心服务 (Grid Card) --- */
+        .services { background: var(--bg-secondary); }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 15px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.08);
+            border-color: var(--primary);
+        }
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        .service-card h3 { margin-bottom: 15px; font-size: 1.4rem; }
+        .service-card p { color: var(--text-gray); font-size: 0.95rem; }
+
+        /* --- 7. 开发流程 --- */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+        .step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            background: var(--bg-color);
+            padding: 0 10px;
+            width: 20%;
+        }
+        .step-num {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        .step h4 { margin-bottom: 10px; }
+        .step p { font-size: 0.85rem; color: var(--text-gray); }
+
+        /* --- 8. 特色项目展示 1 --- */
+        .project-featured {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 0;
+            margin-bottom: 100px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .project-img {
+            height: 400px;
+            overflow: hidden;
+        }
+        .project-img img { width: 100%; height: 100%; object-fit: cover; }
+        .project-info {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .project-tag {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        /* --- 9. 特色项目展示 2 (反向) --- */
+        .project-reversed {
+            grid-template-columns: 0.8fr 1.2fr;
+        }
+        .project-reversed .project-info { order: -1; }
+
+        /* --- 10. 游戏画廊 (Masonry style look) --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 15px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: var(--transition);
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .g-1 { grid-column: 1 / 3; } /* Large Item */
+        .g-2 { grid-column: 3 / 4; }
+        .g-3 { grid-column: 4 / 5; }
+        .g-4 { grid-column: 1 / 2; }
+        .g-5 { grid-column: 2 / 4; } /* Large Item */
+        .g-6 { grid-column: 4 / 5; }
+
+        /* --- 11. 技术架构 (Tab style) --- */
+        .tech-stack { text-align: center; }
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .tech-icon {
+            text-align: center;
+            width: 100px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        .tech-icon:hover { background: var(--glass); transform: translateY(-5px); }
+        .tech-icon i { font-size: 2rem; color: #fff; margin-bottom: 10px; }
+        .tech-icon span { display: block; font-size: 0.8rem; color: var(--text-gray); }
+
+        /* --- 12. 团队介绍 --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .team-member {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+        }
+        .member-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        .member-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: var(--transition); }
+        .team-member:hover .member-img img { filter: grayscale(0%); }
+        .member-info { padding: 20px; }
+        .member-info h4 { color: #fff; margin-bottom: 5px; }
+        .member-info span { color: var(--accent); font-size: 0.9rem; }
+
+        /* --- 13. 客户评价 --- */
+        .testimonials { background: var(--bg-secondary); }
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .review-card {
+            background: var(--bg-color);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        .review-card .stars { color: #f1c40f; margin-bottom: 15px; }
+        .review-card p { font-style: italic; color: var(--text-gray); margin-bottom: 20px; }
+        .reviewer { display: flex; align-items: center; gap: 15px; }
+        .reviewer img { width: 50px; height: 50px; border-radius: 50%; }
+
+        /* --- 14. 招聘信息 (Banner) --- */
+        .careers-banner {
+            background: linear-gradient(90deg, #6c5ce7, #0984e3);
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            color: #fff;
+        }
+        .careers-banner h3 { font-size: 2rem; margin-bottom: 15px; }
+        
+        /* --- 15. FAQ --- */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .faq-answer {
+            color: var(--text-gray);
+            margin-top: 15px;
+            display: none; /* JS Toggle */
+        }
+        .faq-item.active .faq-answer { display: block; animation: fadeIn 0.5s; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- 16. 新闻动态 --- */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .news-item { background: var(--bg-secondary); border-radius: 10px; overflow: hidden; }
+        .news-content { padding: 20px; }
+        .news-date { font-size: 0.8rem; color: var(--accent); margin-bottom: 10px; display: block; }
+        .news-title { font-size: 1.1rem; margin-bottom: 10px; display: block; font-weight: bold; }
+
+        /* --- 17. 订阅 --- */
+        .newsletter { text-align: center; }
+        .newsletter-form {
+            max-width: 500px;
+            margin: 30px auto 0;
+            display: flex;
+            gap: 10px;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* --- 18. 联系我们 --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        .contact-info h3 { font-size: 1.8rem; margin-bottom: 20px; }
+        .contact-detail { margin-bottom: 30px; }
+        .contact-detail p { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; color: var(--text-gray); }
+        .contact-detail i { color: var(--primary); font-size: 1.2rem; }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: #fff;
+            border-radius: 5px;
+        }
+        .contact-form textarea { height: 150px; resize: none; }
+
+        /* --- 19. 地图 --- */
+        .map-container {
+            height: 400px;
+            width: 100%;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .map-placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: url('https://picsum.photos/seed/map/1200/400') center/cover;
+            filter: grayscale(80%);
+        }
+
+        /* --- 20. 页脚 --- */
+        footer {
+            background: #000;
+            padding: 60px 0 20px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand p { color: var(--text-gray); margin-top: 20px; font-size: 0.9rem; }
+        .footer-col h4 { color: #fff; margin-bottom: 20px; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: var(--text-gray); font-size: 0.9rem; transition: 0.3s; }
+        .footer-col ul li a:hover { color: var(--accent); }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* 简化处理，实际项目需添加汉堡菜单 */
+            .hero h1 { font-size: 2.5rem; }
+            .about-grid, .stats-grid, .project-featured, .gallery-grid, .review-grid, .news-grid, .contact-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-img { height: 250px; }
+            .process-steps { flex-direction: column; gap: 30px; }
+            .process-steps::before { width: 2px; height: 100%; left: 25px; top: 0; }
+            .step { width: 100%; text-align: left; padding-left: 70px; }
+            .step-num { position: absolute; left: 0; margin: 0; }
+            .g-1, .g-2, .g-3, .g-4, .g-5, .g-6 { grid-column: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="container nav-inner">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-gamepad"></i>
+                盈霆裕顺网络 YINGTINGYUSHUN NET
+            </a>
+            <nav class="nav-links">
+                <a href="#home" class="active">首页</a>
+                <a href="#about">关于我们</a>
+                <a href="#services">核心服务</a>
+                <a href="#projects">精选案例</a>
+                <a href="#team">团队</a>
+                <a href="#contact">联系我们</a>
+            </nav>
+            <a href="#contact" class="btn btn-primary">项目咨询</a>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1><span>河北盈霆裕顺网络科技有限公司</span>构建虚拟现实的<br>无限边界</h1>
+            <p>我们不仅是在编写代码，更是在中国编织梦境。专注于次世代游戏开发与沉浸式数字体验。</p>
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <a href="#projects" class="btn btn-primary">探索作品</a>
+                <a href="#about" class="btn btn-outline">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>UNITY 3D</span>
+            <span>UNREAL ENGINE 5</span>
+            <span>C# / C++</span>
+            <span>VULKAN API</span>
+            <span>BLENDER</span>
+            <span>DIRECTX 12</span>
+            <span>AI BEHAVIOR TREES</span>
+            <span>PHYSX</span>
+            <span>UNITY 3D</span>
+            <span>UNREAL ENGINE 5</span>
+            <span>C# / C++</span> </div>
+    </div>
+
+    <section id="about" class="section-padding about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text" data-aos="fade-right">
+                    <div class="section-title" style="text-align: left; margin-bottom: 30px;">
+                        <h2>立足中国，面向未来</h2>
+                    </div>
+                    <p style="color: var(--accent); margin-bottom: 20px; font-weight: bold;">用数字技术重构现实世界</p>
+                    <p style="margin-bottom: 20px; color: var(--text-gray);">
+                        河北盈霆裕顺网络科技有限公司成立于中国，坐落于风景秀丽的城市。我们是一群对游戏充满狂热的技术极客与艺术家。
+                    </p>
+                    <p style="margin-bottom: 30px; color: var(--text-gray);">
+                        在这里，传统文化与赛博科技碰撞。我们致力于利用最新的图形技术和游戏引擎，为全球玩家打造震撼的视听盛宴。无论是独立游戏开发，还是大型商业项目的技术支持，我们始终坚持“匠心铸魂”的理念。
+                    </p>
+                    <ul style="margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <li><i class="fa-solid fa-check" style="color:var(--accent)"></i> 自主研发引擎工具</li>
+                        <li><i class="fa-solid fa-check" style="color:var(--accent)"></i> 跨平台移植能力</li>
+                        <li><i class="fa-solid fa-check" style="color:var(--accent)"></i> AAA级美术标准</li>
+                        <li><i class="fa-solid fa-check" style="color:var(--accent)"></i> 7x24h 运维支持</li>
+                    </ul>
+                </div>
+                <div class="about-img" data-aos="fade-left">
+                    <img src="https://picsum.photos/seed/office/800/600" alt="公司环境">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="0">
+                    <h3 class="counter" data-target="50">0</h3>
+                    <p>上线项目</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <h3 class="counter" data-target="120">0</h3>
+                    <p>合作伙伴</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                    <h3 class="counter" data-target="5">0</h3>
+                    <p>年行业深耕</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="counter" data-target="200">0</h3>
+                    <p>万+ 累计玩家</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding services">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>核心业务领域</h2>
+                <p>从概念设计到最终上线，我们提供全生命周期的游戏开发解决方案。</p>
+            </div>
+            <div class="service-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fa-solid fa-mobile-screen-button service-icon"></i>
+                    <h3>移动游戏开发</h3>
+                    <p>专注于iOS和Android平台的高性能游戏开发，涵盖休闲、RPG、SLG等多种品类，极致优化包体大小与运行效率。</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fa-solid fa-vr-cardboard service-icon"></i>
+                    <h3>VR/AR 交互体验</h3>
+                    <p>结合中国旅游资源或工业需求，开发虚拟现实应用。打造身临其境的元宇宙入口。</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fa-solid fa-desktop service-icon"></i>
+                    <h3>PC/主机 端游研发</h3>
+                    <p>利用UE5引擎的强大机能，打造画质惊人的独立游戏作品，支持Steam及主机平台发布。</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fa-solid fa-palette service-icon"></i>
+                    <h3>2D/3D 美术外包</h3>
+                    <p>拥有一流的原画师与3D建模团队，提供角色设计、场景搭建、动作特效等全套美术资产制作。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>标准开发流</h2>
+            </div>
+            <div class="process-steps" data-aos="fade-up">
+                <div class="step">
+                    <div class="step-num">01</div>
+                    <h4>需求分析</h4>
+                    <p>深度沟通游戏核心玩法与商业化逻辑。</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">02</div>
+                    <h4>原型设计</h4>
+                    <p>快速产出Demo，验证核心玩法的趣味性。</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">03</div>
+                    <h4>美术与开发</h4>
+                    <p>敏捷开发模式，定期同步进度与版本。</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">04</div>
+                    <h4>测试调优</h4>
+                    <p>专业的QA团队进行全机型兼容性测试。</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">05</div>
+                    <h4>上线运营</h4>
+                    <p>协助上架各大应用商店及后期数据维护。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-padding" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>精选案例作品</h2>
+            </div>
+            
+            <div class="project-featured" data-aos="fade-right">
+                <div class="project-img">
+                    <img src="https://picsum.photos/seed/cyberpunk/800/600" alt="赛博行动">
+                </div>
+                <div class="project-info">
+                    <span class="project-tag">RPG / Action</span>
+                    <h3>代号：霓虹觉醒</h3>
+                    <p style="margin: 20px 0; color: var(--text-gray);">一款赛博朋克风格的动作RPG手游。玩家将在未来的都市丛林中探索真相。使用了自研的渲染管线，在移动端实现了实时的体积光照效果。</p>
+                    <a href="#" class="btn btn-outline" style="width: fit-content;">查看详情</a>
+                </div>
+            </div>
+
+            <div class="project-featured project-reversed" data-aos="fade-left">
+                <div class="project-img">
+                    <img src="https://picsum.photos/seed/fantasy/800/600" alt="我们的项目">
+                </div>
+                <div class="project-info">
+                    <span class="project-tag">VR + 文旅</span>
+                    <h3>智慧旅游云端漫步</h3>
+                    <p style="margin: 20px 0; color: var(--text-gray);">结合中国实地取景与摄影测量技术，1:1还原中国风光。为游客提供沉浸式的云端漫步体验，展示了科技与文旅的完美融合。</p>
+                    <a href="#" class="btn btn-outline" style="width: fit-content;">查看详情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>视觉艺术</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item g-1" data-aos="fade-in"><img src="https://picsum.photos/seed/gameart1/600/400" alt="Art"></div>
+                <div class="gallery-item g-2" data-aos="fade-in"><img src="https://picsum.photos/seed/gameart2/300/300" alt="Art"></div>
+                <div class="gallery-item g-3" data-aos="fade-in"><img src="https://picsum.photos/seed/gameart3/300/300" alt="Art"></div>
+                <div class="gallery-item g-4" data-aos="fade-in"><img src="https://picsum.photos/seed/gameart4/300/300" alt="Art"></div>
+                <div class="gallery-item g-5" data-aos="fade-in"><img src="https://picsum.photos/seed/gameart5/600/400" alt="Art"></div>
+                <div class="gallery-item g-6" data-aos="fade-in"><img src="https://picsum.photos/seed/gameart6/300/300" alt="Art"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding tech-stack" style="background: var(--bg-secondary);">
+        <div class="container">
+            <h2>我们使用的强力工具</h2>
+            <div class="tech-icons" data-aos="zoom-in">
+                <div class="tech-icon"><i class="fa-brands fa-unity"></i><span>Unity</span></div>
+                <div class="tech-icon"><i class="fa-brands fa-js"></i><span>JavaScript</span></div>
+                <div class="tech-icon"><i class="fa-brands fa-python"></i><span>Python</span></div>
+                <div class="tech-icon"><i class="fa-brands fa-android"></i><span>Android</span></div>
+                <div class="tech-icon"><i class="fa-brands fa-apple"></i><span>iOS</span></div>
+                <div class="tech-icon"><i class="fa-brands fa-aws"></i><span>Cloud</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心团队</h2>
+                <p>一群热爱游戏的造梦者</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member" data-aos="flip-left">
+                    <div class="member-img"><img src="https://picsum.photos/seed/person1/400/500" alt="CEO"></div>
+                    <div class="member-info">
+                        <h4>张伟</h4>
+                        <span>创始人 / 首席制作人</span>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-img"><img src="https://picsum.photos/seed/person2/400/500" alt="CTO"></div>
+                    <div class="member-info">
+                        <h4>李娜</h4>
+                        <span>技术总监</span>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="200">
+                    <div class="member-img"><img src="https://picsum.photos/seed/person3/400/500" alt="Art"></div>
+                    <div class="member-info">
+                        <h4>王强</h4>
+                        <span>主美术师</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding testimonials">
+        <div class="container">
+            <div class="section-title"><h2>客户与玩家之声</h2></div>
+            <div class="review-grid">
+                <div class="review-card" data-aos="fade-up">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p>"贵司团队的技术实力令人印象深刻，不仅按时交付了项目，还在性能优化上超出了我们的预期。"</p>
+                    <div class="reviewer">
+                        <img src="https://picsum.photos/seed/user1/100/100" alt="User">
+                        <div><strong>某文旅集团</strong><span>项目经理</span></div>
+                    </div>
+                </div>
+                <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p>"《霓虹觉醒》的打击感太棒了！作为国产独立游戏，画面表现力完全不输大厂。"</p>
+                    <div class="reviewer">
+                        <img src="https://picsum.photos/seed/user2/100/100" alt="User">
+                        <div><strong>资深玩家</strong><span>TapTap评论</span></div>
+                    </div>
+                </div>
+                <div class="review-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p>"非常专业的合作伙伴，沟通顺畅，能够快速理解我们的设计意图并落地实现。"</p>
+                    <div class="reviewer">
+                        <img src="https://picsum.photos/seed/user3/100/100" alt="User">
+                        <div><strong>独立工作室</strong><span>制作人</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="careers-banner" data-aos="zoom-in">
+                <h3>寻找下一个合作伙伴</h3>
+                <p style="margin-bottom: 25px;">我们在寻找 Unity 客户端开发、3D 场景美术以及游戏数值策划。</p>
+                <a href="mailto:contact@yingtingyushunnet.asia" class="btn" style="background:#fff; color:var(--primary);">加入我们</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-title"><h2>最新动态</h2></div>
+            <div class="news-grid">
+                <div class="news-item">
+                    <img src="https://picsum.photos/seed/news1/600/300" style="width:100%" alt="News">
+                    <div class="news-content">
+                        <span class="news-date">2023.11.15</span>
+                        <span class="news-title">公司荣获“中国高新技术企业”称号</span>
+                        <a href="#" style="font-size:0.9rem; color:var(--text-gray)">阅读更多 ></a>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="https://picsum.photos/seed/news2/600/300" style="width:100%" alt="News">
+                    <div class="news-content">
+                        <span class="news-date">2023.10.01</span>
+                        <span class="news-title">新作《云端之上》参展成都IGS游戏博览会</span>
+                        <a href="#" style="font-size:0.9rem; color:var(--text-gray)">阅读更多 ></a>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="https://picsum.photos/seed/news3/600/300" style="width:100%" alt="News">
+                    <div class="news-content">
+                        <span class="news-date">2023.09.20</span>
+                        <span class="news-title">我们与本地高校达成产学研合作协议</span>
+                        <a href="#" style="font-size:0.9rem; color:var(--text-gray)">阅读更多 ></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-title"><h2>常见问题</h2></div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">你们接受定制开发吗？ <i class="fa-solid fa-plus"></i></div>
+                    <div class="faq-answer">是的，我们提供从策划到上线的全流程定制开发服务，包括企业Gamification应用、VR展厅等。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">开发一款游戏的周期大概多久？ <i class="fa-solid fa-plus"></i></div>
+                    <div class="faq-answer">这取决于游戏的体量和类型。休闲小游戏通常需要1-2个月，而中重度RPG项目可能需要6个月以上。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">售后维护如何保障？ <i class="fa-solid fa-plus"></i></div>
+                    <div class="faq-answer">我们提供至少6个月的免费技术维护期，确保游戏上线后的稳定运行，并快速响应Bug修复。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding newsletter" style="background: linear-gradient(to bottom, var(--bg-color), var(--bg-secondary));">
+        <div class="container">
+            <h2>订阅我们的技术周刊</h2>
+            <p style="color:var(--text-gray)">获取最新的游戏开发干货与公司动态</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="输入您的邮箱地址...">
+                <button type="submit" class="btn btn-primary">订阅</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <h3>开始您的项目</h3>
+                    <p style="margin-bottom: 40px; color: var(--text-gray);">无论是寻求技术合作，还是有绝妙的游戏点子，欢迎随时联系我们。</p>
+                    
+                    <div class="contact-detail">
+                        <p><i class="fa-solid fa-location-dot"></i> 河北省廊坊市固安县东方街永固路人才家园9-1-701</p>
+                        <p><i class="fa-solid fa-envelope"></i> contact@yingtingyushunnet.asia</p>
+                        <p><i class="fa-solid fa-phone"></i> 16501328299</p>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <a href="#" style="margin-right:15px; font-size:1.5rem;"><i class="fa-brands fa-weixin"></i></a>
+                        <a href="#" style="margin-right:15px; font-size:1.5rem;"><i class="fa-brands fa-weibo"></i></a>
+                        <a href="#" style="font-size:1.5rem;"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <form class="contact-form" data-aos="fade-left">
+                    <input type="text" placeholder="您的称呼">
+                    <input type="email" placeholder="电子邮箱">
+                    <input type="text" placeholder="联系电话">
+                    <textarea placeholder="请简述您的需求..."></textarea>
+                    <button type="submit" class="btn btn-primary" style="width:100%">发送消息</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="map-container">
+        <div class="map-placeholder">
+            <h3 style="background: rgba(0,0,0,0.7); padding: 10px 20px;">MAP LOCATION: 河北省廊坊市固安县东方街永固路人才家园9-1-701</h3>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">盈霆裕顺网络 YINGTINGYUSHUN NET</a>
+                    <p>河北盈霆裕顺网络科技有限公司，致力于成为中国最具影响力的游戏开发商与技术服务商。</p>
+                </div>
+                <div class="footer-col">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#services">服务项目</a></li>
+                        <li><a href="#projects">案例展示</a></li>
+                        <li><a href="#contact">联系方式</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>服务支持</h4>
+                    <ul>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">服务条款</a></li>
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#">微信公众号</a></li>
+                        <li><a href="#">官方微博</a></li>
+                        <li><a href="#">Bilibili</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 河北盈霆裕顺网络科技有限公司 All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 初始化 AOS 动画库
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+                header.style.background = 'rgba(11, 12, 21, 0.95)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.background = 'rgba(11, 12, 21, 0.8)';
+            }
+        });
+
+        // 数字增长动画
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // 使用 Intersection Observer 触发数字动画
+        let options = { threshold: 0.5 };
+        let observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+        document.querySelector('.stats').querySelectorAll('.counter').forEach(c => observer.observe(c.parentElement));
+
+        // FAQ 切换
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+                
+                // 关闭其他
+                document.querySelectorAll('.faq-item').forEach(other => {
+                    if (other !== parent) {
+                        other.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
